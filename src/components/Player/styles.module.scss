@@ -1,7 +1,7 @@
 .playerContainer {
-  padding: 3rem 4rem;
+  padding: 1.7rem 4rem;
   width: 26.5rem;
-  height: 100vh;
+  max-height: 100vh;
 
   background: var(--purple-500);
   color: var(--white);
@@ -11,10 +11,14 @@
   align-items: center;
   justify-content: space-between;
 
+  position: sticky;
+  top: 0;
+
   header {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 0.7rem;
   }
 
   strong {
@@ -40,7 +44,7 @@
 
   strong {
     display: block;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     font: 600 1.25rem Lexend, sans-serif;
     line-height: 1.75rem;
   }
@@ -73,6 +77,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
+  margin-top: 1rem;
 
   span {
     display: inline-block;
@@ -96,7 +101,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2.5rem;
+  margin-top: 0.8rem;
   gap: 1.5rem;
 
   button {

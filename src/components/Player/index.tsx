@@ -138,13 +138,13 @@ export function Player() {
           <button
             type='button'
             className={styles.playButton}
-            disabled={!episode || episodeList.length === 1}
+            disabled={!episode}
             onClick={togglePlay}
           >
             {isPlaying ? (
               <img src="/pause.svg" alt="Tocar" />
             ):(
-              <img src="/play.svg" alt="Tocar" />
+              <img src="/play.svg" alt="Pausar" />
             )}
           </button>
           <button type='button' onClick={playNext} disabled={!episode || !hasNext}>

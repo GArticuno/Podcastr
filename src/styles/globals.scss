@@ -21,7 +21,17 @@
   box-sizing: border-box;
 }
 
-@media(max-width: 1080px){
+body::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--gray-100);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--purple-800);
+  border-radius: 10px;
+}
+
+@media(max-width: 1400px){
   html {
     font-size: 93.75%;
   }
