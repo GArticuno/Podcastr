@@ -11,7 +11,6 @@ import { convertDurationToTimeString } from '../utils/convertDurationToTimeStrin
 
 import { usePlayer } from '../contexts/PlayerContext';
 import styles from '../styles/home.module.scss';
-import { FileUploadPage } from '../components/Uploader';
 
 interface Episode {
   name: string;
@@ -90,7 +89,7 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
                   <td>{episode.duratioAsString}</td>
                   <td>
                     <button type='button' onClick={()=> playList(episodeList, index + latestEpisodes.length)}>
-                      <img src="/play-green.svg" alt="Tocar episódio"/>
+                      <Image src="/play-green.svg" alt="Tocar episódio" width={20} height={20} />
                     </button>
                   </td>
                 </tr>

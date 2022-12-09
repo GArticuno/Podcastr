@@ -1,10 +1,13 @@
 import { createContext, ReactNode, useContext, useState} from 'react';
 
 interface Episode {
+  id: string;
   title: string;
   members: string;
+  publishedAt: string;
   thumbnail: string;
   duration: number;
+  duratioAsString: string;
   url: string;
 }
 
@@ -34,7 +37,7 @@ interface PlayerContextProviderProps {
 export const PlayerContext = createContext({} as PlayerContextData);
 
 export function PlayerContextProvider({children}: PlayerContextProviderProps){
-  const [episodeList,  setEpisodeList] = useState([]);
+  const [episodeList,  setEpisodeList] = useState<Episode[]>([]);
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);

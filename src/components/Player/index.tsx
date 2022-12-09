@@ -46,18 +46,21 @@ export function Player() {
   }, [isPlaying])
 
   function setupProgressListener() {
-	if(audioRef.current){
-	  audioRef.current.addEventListener('timeupdate', () => {
-        setProgress(Math.floor(audioRef.current.currentTime ?? 0));
-      })
-    }
-  }
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.addEventListener('timeupdate', () => {
+        if (audioRef.current) {
+          setProgress(Math.floor(audioRef.current.currentTime));
+        }
+      });
+    };
+  };
 
-  function handleSeek(amount: number) {
-	if(audioRef.current){
-	  audioRef.current.currentTime = amount;
+  function handleSeek(amount: number | number[]) {
+    if (audioRef.current && typeof amount === 'number') {
+      audioRef.current.currentTime = amount;
       setProgress(amount);
-	}
+    }
   }
 
   function handleEnded(){
@@ -71,7 +74,7 @@ export function Player() {
   return (
     <div className={styles.playerContainer}>
       <header>
-        <img src="/playing.svg" alt="Tocando agora" />
+        <Image src="/playing.svg" alt="Tocando agora" width={32} height={32} />
         <strong>Tocando agora</strong>
       </header>
       {episode ? (
@@ -79,8 +82,9 @@ export function Player() {
           <Image 
             width={290} 
             height={210} 
-            src={episode.thumbnail} 
-            />
+            src={episode.thumbnail}
+            alt="thumbnail"
+          />
           <strong>{episode.title}</strong>
           <span>{episode.members}</span>
         </div>
@@ -130,10 +134,10 @@ export function Player() {
             onClick={toggleShuffle}
             className={isShuffling ? styles.isActive : ''}
             >
-            <img src="/shuffle.svg" alt="Embaralhar" />
+            <Image src="/shuffle.svg" alt="Embaralhar" width={24} height={24} />
           </button>
           <button type='button' onClick={playPrevious} disabled={!episode || !hasPrevious}>
-            <img src="/play-previous.svg" alt="Tocar anterior" />
+            <Image src="/play-previous.svg" alt="Tocar anterior" width={24} height={24} />
           </button>
           
           <button
@@ -143,13 +147,13 @@ export function Player() {
             onClick={togglePlay}
           >
             {isPlaying ? (
-              <img src="/pause.svg" alt="Tocar" />
+              <Image src="/pause.svg" alt="Tocar" width={11} height={19} />
             ):(
-              <img src="/play.svg" alt="Pausar" />
+              <Image src="/play.svg" alt="Pausar" width={32} height={32} />
             )}
           </button>
           <button type='button' onClick={playNext} disabled={!episode || !hasNext}>
-            <img src="/play-next.svg" alt="Tocar próximo" />
+            <Image src="/play-next.svg" alt="Tocar próximo" width={24} height={24} />
           </button>
           <button 
             type='button' 
@@ -157,7 +161,7 @@ export function Player() {
             disabled={!episode}
             className={isLooping ? styles.isActive : ''}
             >
-            <img src="/repeat.svg" alt="Repitir" />
+            <Image src="/repeat.svg" alt="Repitir" width={24} height={24} />
           </button>
         </div>
       </footer>
