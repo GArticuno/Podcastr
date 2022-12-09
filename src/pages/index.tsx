@@ -11,9 +11,24 @@ import { convertDurationToTimeString } from '../utils/convertDurationToTimeStrin
 
 import { usePlayer } from '../contexts/PlayerContext';
 import styles from '../styles/home.module.scss';
-
+import { FileUploadPage } from '../components/Uploader';
 
 interface Episode {
+  name: string;
+  title: string;
+  members: string;
+  thumbnail: string;
+  description: string;
+  published_at: string;
+  url: string,
+  duration: number;
+};
+
+interface Response {
+  results: Episode[];
+};
+
+interface EpisodeFormated {
   id: string;
   title: string;
   members: string;
@@ -22,11 +37,10 @@ interface Episode {
   duration: number;
   duratioAsString: string;
   url: string;
-}
-
+};
 interface HomeProps {
-  latestEpisodes: Episode[];
-  allEpisodes: Episode[];
+  latestEpisodes: EpisodeFormated[];
+  allEpisodes: EpisodeFormated[];
 }
 
 export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
@@ -39,39 +53,6 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
       <Head>
         <title>Home | Podcastr</title>
       </Head>
-      <section className={styles.latestEpisodes}>
-        <h2>Últimos lançamentos</h2>
-
-        <ul>
-          {latestEpisodes.map((episode, index) => {
-            return(
-              <li key={episode.id}>
-                <Image
-                  width={192}
-                  height={192} 
-                  src={episode.thumbnail} 
-                  alt={episode.title}
-                  objectFit='cover'
-                />
-
-                <div className={styles.episodesDetails}>
-                  <Link href={`/episodes/${episode.id}`}>
-                    <a >{episode.title}</a>
-                  </Link>
-                  <p>{episode.members}</p>
-                  <span>{episode.publishedAt}</span>
-                  <span>{episode.duratioAsString}</span>
-                </div>
-
-                <button type='button' onClick={()=> playList(episodeList, index)}>
-                  <img src="/play-green.svg" alt="Tocar episódio"/>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      </section>
-
       <section className={styles.allEpisodes}>
         <h2>Todos os episódios</h2>
 
@@ -101,7 +82,7 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
                   </td>
                   <td>
                     <Link href={`/episodes/${episode.id}`}>
-                      <a>{episode.title}</a>
+                      <div>{episode.title}</div>
                     </Link>
                   </td>
                   <td>{episode.members}</td>
@@ -123,26 +104,25 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
 }
 
 export  const getStaticProps : GetStaticProps = async () => {
-  const {data} = await api.get('episodes', {
+  const { data } = await api.get<Response>('', {
     params:{
-      _limit: 12,
-      _sort: 'published_at',
-      _order: 'desc'
+      limit: 12,
+      order: '-published_at',
     }
   });
 
-  const episodes = data.map(episode => {
+  const episodes: EpisodeFormated[] = data.results.map(episode => {
     return{
-      id: episode.id,
+      id: episode.name,
       title: episode.title,
       members: episode.members,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
       thumbnail: episode.thumbnail,
-      duration: Number(episode.file.duration),
-      duratioAsString: convertDurationToTimeString(Number(episode.file.duration)),
-      url: episode.file.url
+      duration: Number(episode.duration),
+      duratioAsString: convertDurationToTimeString(Number(episode.duration)),
+      url: episode.url
     }
-  })
+  });
 
   const latestEpisodes = episodes.slice(0, 2);
   const allEpisodes = episodes.slice(2, episodes.length);

@@ -21,6 +21,11 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: var(--gray-50);
+
+}
+
 body::-webkit-scrollbar {
   width: 10px;
   background-color: var(--gray-100);
@@ -29,23 +34,6 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background-color: var(--purple-800);
   border-radius: 10px;
-}
-
-@media(max-width: 1400px){
-  html {
-    font-size: 93.75%;
-  }
-}
-
-@media(max-width: 720px){
-  html {
-    font-size: 87.5%;
-  }
-}
-
-body {
-  background-color: var(--gray-50);
-
 }
 
 body, input, textarea, button {
@@ -70,4 +58,16 @@ h2 {
 
 button{
   cursor: pointer;
+}
+
+@media(max-width: 1400px){
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media(max-width: 720px){
+  html {
+    font-size: 87.5%;
+  }
 }
