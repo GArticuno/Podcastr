@@ -46,15 +46,18 @@ export function Player() {
   }, [isPlaying])
 
   function setupProgressListener() {
-
-    audioRef.current.addEventListener('timeupdate', () => {
-      setProgress(Math.floor(audioRef.current.currentTime ?? 0));
-    })
+	if(audioRef.current){
+	  audioRef.current.addEventListener('timeupdate', () => {
+        setProgress(Math.floor(audioRef.current.currentTime ?? 0));
+      })
+    }
   }
 
   function handleSeek(amount: number) {
-    audioRef.current.currentTime = amount;
-    setProgress(amount);
+	if(audioRef.current){
+	  audioRef.current.currentTime = amount;
+      setProgress(amount);
+	}
   }
 
   function handleEnded(){
