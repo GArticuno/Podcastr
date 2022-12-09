@@ -46,11 +46,10 @@ export function Player() {
   }, [isPlaying])
 
   function setupProgressListener() {
-    audioRef.current.currentTime = 0;
 
     audioRef.current.addEventListener('timeupdate', () => {
-      setProgress(Math.floor(audioRef.current.currentTime));
-    } )
+      setProgress(Math.floor(audioRef.current.currentTime ?? 0));
+    })
   }
 
   function handleSeek(amount: number) {
