@@ -58,8 +58,8 @@ export default function Episode({episode}: EpisodeProps){
           </button>
         </Link>
         <Image
-          width={700}
-          height={160}
+          width={600}
+          height={350}
           src={episode.thumbnail}
           alt="thumbnail"
         />
@@ -85,7 +85,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const {data} = await api.get<Response>('', {
     params:{
       limit: 2,
-      sort: '-published_at',
+      order: '-published_at',
     }
   });
 
@@ -103,10 +103,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) =>{
-  console.log(ctx);
   const { data } = await api.get<Response>(``);
-  console.log(data);
-  const episode = data.results.filter((item) => item.name);
+  const episode = data.results.filter((item) => item.name === ctx.params?.slug);
 
   const episodeFormated = {
     id: episode[0].name,

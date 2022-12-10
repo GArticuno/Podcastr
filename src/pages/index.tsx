@@ -62,16 +62,16 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
             return(
               <li key={episode.id}>
                 <Image
-                  width={160}
-                  height={120} 
+                  width={170}
+                  height={100} 
                   src={episode.thumbnail} 
                   alt={episode.title}
                 />
 
                 <div className={styles.episodesDetails}>
-                  <a className="link" onClick={() => push('/episodes/' + episode.id)}>
+                  <Link href={`/episodes/${episode.id}`}>
                     {episode.title}
-                  </a>
+                  </Link>
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt}</span>
                   <span>{episode.duratioAsString}</span>
@@ -113,9 +113,9 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
                     />
                   </td>
                   <td>
-                    <a className="link" onClick={() => push('/episodes/' + episode.id)}>
+                    <Link href={`/episodes/${episode.id}`}>
                       {episode.title}
-                    </a>
+                    </Link>
                   </td>
                   <td>{episode.members}</td>
                   <td style={{width: 100}}>{episode.publishedAt}</td>
