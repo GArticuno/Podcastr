@@ -47,13 +47,14 @@
         flex:1;
         margin-left: 1rem;
 
-        a {
-          display:block;
+        a, .link {
+          display: block;
           color: var(--gray-800);
           font-family: Lexend, sans-serif;
           font-weight: 600;
           text-decoration: none;
           line-height: 1.4rem;
+          cursor: pointer;
 
           &:hover {
             text-decoration: underline;
@@ -147,13 +148,14 @@
         border-radius: 0.5rem;
       }
 
-      a {
+      a, .link {
         color: var(--gray-800);
         font-family: Lexend, sans-serif;
         font-weight: 600;
         text-decoration: none;
         line-height: 1.4rem;
         font-size: 1rem;
+        cursor: pointer;
 
         &:hover {
           text-decoration: underline;

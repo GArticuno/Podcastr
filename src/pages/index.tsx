@@ -11,6 +11,7 @@ import { convertDurationToTimeString } from '../utils/convertDurationToTimeStrin
 
 import { usePlayer } from '../contexts/PlayerContext';
 import styles from '../styles/home.module.scss';
+import { useRouter } from 'next/router';
 
 interface Episode {
   name: string;
@@ -44,6 +45,7 @@ interface HomeProps {
 
 export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
   const { playList } = usePlayer();
+  const { push } = useRouter();
 
   const episodeList = [...latestEpisodes, ...allEpisodes]
 
@@ -52,6 +54,38 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
       <Head>
         <title>Home | Podcastr</title>
       </Head>
+      <section className={styles.latestEpisodes}>
+        <h2>Últimos lançamentos</h2>
+
+        <ul>
+          {latestEpisodes.map((episode, index) => {
+            return(
+              <li key={episode.id}>
+                <Image
+                  width={160}
+                  height={120} 
+                  src={episode.thumbnail} 
+                  alt={episode.title}
+                />
+
+                <div className={styles.episodesDetails}>
+                  <a className="link" onClick={() => push('/episodes/' + episode.id)}>
+                    {episode.title}
+                  </a>
+                  <p>{episode.members}</p>
+                  <span>{episode.publishedAt}</span>
+                  <span>{episode.duratioAsString}</span>
+                </div>
+
+                <button type='button' onClick={()=> playList(episodeList, index)}>
+                  <Image src="/play-green.svg" alt="Tocar episódio" width={20} height={20} />
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+
       <section className={styles.allEpisodes}>
         <h2>Todos os episódios</h2>
 
@@ -76,13 +110,12 @@ export default function Home({latestEpisodes, allEpisodes} : HomeProps) {
                       height={120}
                       src={episode.thumbnail}
                       alt={episode.title}
-                      objectFit='cover'
                     />
                   </td>
                   <td>
-                    <Link href={`/episodes/${episode.id}`}>
-                      <div>{episode.title}</div>
-                    </Link>
+                    <a className="link" onClick={() => push('/episodes/' + episode.id)}>
+                      {episode.title}
+                    </a>
                   </td>
                   <td>{episode.members}</td>
                   <td style={{width: 100}}>{episode.publishedAt}</td>
